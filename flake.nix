@@ -35,6 +35,10 @@
           prettier.enable = true;
         };
         devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            nodejs
+          ];
+
           shellHook = ''
             ${config.pre-commit.installationScript}
             echo 1>&2 "Welcome to the development shell!"
