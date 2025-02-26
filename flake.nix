@@ -29,7 +29,7 @@
         ...
       }: {
         pre-commit.settings.hooks = {
-          gpt-commit.enable = true;
+          gptcommit.enable = true;
         };
         treefmt.programs = {
           prettier.enable = true;
