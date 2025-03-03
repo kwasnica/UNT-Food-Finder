@@ -9,18 +9,12 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = with inputs; [
         git-hooks-nix.flakeModule
-        treefmt-nix.flakeModule
       ];
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
       perSystem = {
@@ -31,9 +25,6 @@
         pre-commit.settings.hooks = {
           gptcommit.enable = true;
         };
-        treefmt.programs = {
-          prettier.enable = true;
-        };
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             nodejs
@@ -41,7 +32,7 @@
 
           shellHook = ''
             ${config.pre-commit.installationScript}
-            echo 1>&2 "Welcome to the development shell!"
+            echo 1>&2 "[LOG] Welcome to the development shell!"
           '';
         };
       };
