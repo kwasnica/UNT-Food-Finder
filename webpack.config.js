@@ -8,6 +8,9 @@ const autoprefixer = require("autoprefixer");
 module.exports = {
   mode: "development",
   entry: "./src/js/main.js",
+  stats: {
+    warningsFilter: ["./src/scss/styles.scss"],
+  },
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
