@@ -32,7 +32,9 @@
 
           shellHook = ''
             ${config.pre-commit.installationScript}
-            echo 1>&2 "[LOG] Welcome to the development shell!"
+            echo 1>&2 "[INFO] Welcome to the development shell!"
+
+            ./init.sh
           '';
         };
       };
