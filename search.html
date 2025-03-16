@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNT Food Finder - Search</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-left">
+            <h1>UNT Food Finder</h1>
+        </div>
+        <nav class="header-right">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="searchBox" placeholder="Search food...">
+        <button onclick="searchFood()">🔍 Search</button>
+    </div>
+
+    <!-- Food Type Selection -->
+    <div class="food-types">
+        <button onclick="filterByType('mexican')">🌮 Mexican</button>
+        <button onclick="filterByType('italian')">🍝 Italian</button>
+        <button onclick="filterByType('indian')">🍛 Indian</button>
+        <button onclick="filterByType('chinese')">🥡 Chinese</button>
+        <button onclick="filterByType('thai')">🍜 Thai</button>
+        <button onclick="filterByType('japanese')">🍣 Japanese</button>
+        <button onclick="filterByType('korean')">🍲 Korean</button>
+        <button onclick="filterByType('american')">🍔 American</button>
+        <button onclick="filterByType('bakery')">🥐 Bakery</button>
+        <button onclick="filterByType('drinks')">☕ Drinks</button>
+    </div>
+
+    <!-- Content Container for Side-by-Side Layout -->
+<div class="content-container">
+
+    <!-- Filter Sidebar (Dietary Preferences) -->
+    <aside class="filter-sidebar">
+        <h3>Dietary Preferences</h3>
+        <label><input type="checkbox" onclick="filterByPreference('vegan')"> Vegan</label>
+        <label><input type="checkbox" onclick="filterByPreference('vegetarian')"> Vegetarian</label>
+        <label><input type="checkbox" onclick="filterByPreference('halal')"> Halal</label>
+        <label><input type="checkbox" onclick="filterByPreference('gluten-free')"> Gluten-Free</label>
+        <label><input type="checkbox" onclick="filterByPreference('kosher')"> Kosher</label>
+    </aside>
+
+    <!-- Restaurants List -->
+    <div class="restaurant-list" id="restaurantList">
+        <!-- Restaurants will be dynamically added here -->
+    </div>
+
+</body>
+</html>
