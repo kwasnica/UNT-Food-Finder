@@ -1,0 +1,20 @@
+{
+  "name": "unt-food-finder",
+  "version": "1.0.0",
+  "description": "Food location finder website for UNT students",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwasnica/UNT-Food-Finder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kwasnica/UNT-Food-Finder/issues"
+  },
+  "homepage": "https://github.com/kwasnica/UNT-Food-Finder#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
