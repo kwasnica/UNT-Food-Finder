@@ -1,0 +1,55 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const Restaurant = ({ restaurant }) => {
+    const { id, name, address } = restaurant;
+    const [reviews, setReviews] = useState([]);
+    const [newReview, setNewReview] = useState({ user: "", rating: 1, comment: "" });
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/api/reviews/${id}`)
+            .then(response => setReviews(response.data))
+            .catch(error => console.error("Error fetching reviews:", error));
+    }, [id]);
+
+    const handleReviewSubmit = async (e) => {
+        e.preventDefault();
+        await axios.post("http://localhost:5000/api/reviews", {
+            restaurantId: id,
+            user: newReview.user,
+            rating: newReview.rating,
+            comment: newReview.comment
+        });
+        setNewReview({ user: "", rating: 1, comment: "" });
+        window.location.reload(); // Refresh to fetch new reviews
+    };
+
+    return (
+        <div className="restaurant-card">
+            <h2>{name}</h2>
+            <p>{address}</p>
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer">View on Google Maps</a>
+            <br />
+            <a href={`https://maps.apple.com/?q=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer">View on Apple Maps</a>
+            
+            <h3>Reviews</h3>
+            {reviews.length > 0 ? reviews.map((review, index) => (
+                <div key={index} className="review">
+                    <p><strong>{review.user}</strong> ({review.rating}⭐): {review.comment}</p>
+                </div>
+            )) : <p>No reviews yet.</p>}
+
+            <h3>Leave a Review</h3>
+            <form onSubmit={handleReviewSubmit}>
+                <input type="text" placeholder="Your Name" value={newReview.user} onChange={(e) => setNewReview({ ...newReview, user: e.target.value })} required />
+                <select value={newReview.rating} onChange={(e) => setNewReview({ ...newReview, rating: e.target.value })}>
+                    {[1, 2, 3, 4, 5].map(num => <option key={num} value={num}>{num} Stars</option>)}
+                </select>
+                <textarea placeholder="Your Review" value={newReview.comment} onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })} required />
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    );
+};
+
+export default Restaurant;
