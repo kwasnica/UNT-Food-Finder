@@ -14,14 +14,14 @@ $password = $_POST['password'];
 // database call procedure to add user to table
 
 $sql = "CALL proc_insert_user('$firstName','$lastName','$email','$password')";
-// insert in database 
+// insert in database
 $rs = mysqli_query($con, $sql);
 
 if($rs)
 {
 	echo "Account Created";
 }
-    
+
 
 ?>
 
