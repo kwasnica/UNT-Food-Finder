@@ -1,5 +1,5 @@
 CREATE DATABASE restaurant_reviews;
-\ c restaurant_reviews;
+\c restaurant_reviews;
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
   restaurant_id INT NOT NULL,
