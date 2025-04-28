@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UNT Food Finder</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .section-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .section-container h2 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">UNT Food Finder</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html"><button class="btn btn-light">Home</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html"><button class="btn btn-light">About</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="search.html"><button class="btn btn-light">Search</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="submit.html"><button class="btn btn-light">Submit</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="favorites.html"><button class="btn btn-light">Favorites</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html"><button class="btn btn-light">Login</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="signup.html"><button class="btn btn-light">Sign Up</button></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Search Section -->
+  <div class="section-container">
+    <h2 class="text-center">Search Dining Options</h2>
+    <form id="searchForm">
+      <div class="mb-3">
+        <label for="searchQuery" class="form-label">Search</label>
+        <input type="search" class="form-control" id="searchQuery" placeholder="Enter keywords (e.g., pizza, vegan)">
+      </div>
+      <div class="mb-3">
+        <label for="cuisine" class="form-label">Cuisine</label>
+        <select class="form-select" id="cuisine">
+          <option value="">-- Select --</option>
+          <option value="all">All</option>
+          <option value="american">American</option>
+          <option value="mexican">Mexican</option>
+          <option value="italian">Italian</option>
+          <option value="asian">Asian</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="dietaryPreference" class="form-label">Dietary Preference</label>
+        <select class="form-select" id="dietaryPreference">
+          <option value="">-- Select --</option>
+          <option value="vegan">Vegan</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="halal">Halal</option>
+          <option value="gluten-free">Gluten-Free</option>
+          <option value="kosher">Kosher</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Search</button>
+    </form>
+  </div>
+
+  <!-- Restaurant Form & List Section -->
+  <div class="container my-5">
+    <h2 class="mb-4">Add Local Restaurant</h2>
+    <form id="restaurant-form" class="mb-5">
+      <div class="mb-3">
+        <label for="name" class="form-label">Restaurant Name</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" id="location" name="location" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="cuisineInput" class="form-label">Cuisine</label>
+        <input type="text" id="cuisineInput" name="cuisine" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="dietary" class="form-label">Dietary Options</label>
+        <input type="text" id="dietary" name="dietary" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="special_offer" class="form-label">Special Offer</label>
+        <input type="text" id="special_offer" name="special_offer" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">Add Restaurant</button>
+    </form>
+
+    <h2 class="mb-4">Restaurant Listings</h2>
+    <div id="restaurant-list" class="row row-cols-1 row-cols-md-2 g-4">
+      <!-- Restaurant cards will be injected here -->
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Restaurant Logic -->
+  <script src="restaurants.js"></script>
+  <!-- Search Form Logic -->
+  <script>
+    document.getElementById("searchForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const query = document.getElementById("searchQuery").value.trim();
+      const cuisine = document.getElementById("cuisine").value;
+      const dietary = document.getElementById("dietaryPreference").value;
+      alert("Searching for: " + query + (cuisine ? ", " + cuisine : "") + (dietary ? " with preference: " + dietary : ""));
+      this.reset();
+    });
+  </script>
+
+<footer class="text-center bg-success text-white py-3">
+  © 2025 UNT Food Finder | Built with 💚 for UNT students
+</footer>
+
+</body>
+</html>

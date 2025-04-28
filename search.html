@@ -1,68 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UNT Food Finder - Search</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search - UNT Food Finder</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .search-container {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .search-container h2 {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
-
 <body>
-
-  <!-- Header Section -->
-  <header>
-    <div class="header-left">
-      <h1>UNT Food Finder</h1>
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">UNT Food Finder</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html"><button class="btn btn-light">Home</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html"><button class="btn btn-light">About</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="search.html"><button class="btn btn-light">Search</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="submit.html"><button class="btn btn-light">Submit</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="favorites.html"><button class="btn btn-light">Favorites</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html"><button class="btn btn-light">Login</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="signup.html"><button class="btn btn-light">Sign Up</button></a></li>
+      </ul>
     </div>
-    <nav class="header-right">
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
+  </div>
+</nav>
 
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <input type="text" id="searchBox" placeholder="Search food...">
-    <button onclick="searchFood()">🔍 Search</button>
+  <div id="header"></div>
+
+  <div class="search-container">
+    <h2 class="text-center">Search Dining Options</h2>
+    <form id="searchForm">
+      <div class="mb-3">
+        <label for="searchQuery" class="form-label">Search</label>
+        <input type="search" class="form-control" id="searchQuery" placeholder="Enter keywords (e.g., pizza, vegan)">
+      </div>
+      <div class="md-3">
+        <label for="cuisine" class="form-label">Cuisine</label>
+            <select class="form-select" id="cuisine">
+              <option value="">-- Select --</option>
+              <option value="">All</option>
+              <option value="american">American</option>
+              <option value="mexican">Mexican</option>
+              <option value="italian">Italian</option>
+              <option value="asian">Asian</option>
+            </select>
+          </div>
+      <div class="mb-3">
+        <label for="dietaryPreference" class="form-label">Dietary Preference</label>
+        <select class="form-select" id="dietaryPreference">
+          <option value="">-- Select --</option>
+          <option value="vegan">Vegan</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="halal">Halal</option>
+          <option value="gluten-free">Gluten-Free</option>
+          <option value="kosher">Kosher</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Search</button>
+     </form> 
+      <div id="searchResults" class="row">
+        <!-- Search results will be displayed here -->
+      </div>
   </div>
 
-  <!-- Food Type Selection -->
-  <div class="food-types">
-    <button onclick="filterByType('mexican')">🌮 Mexican</button>
-    <button onclick="filterByType('italian')">🍝 Italian</button>
-    <button onclick="filterByType('indian')">🍛 Indian</button>
-    <button onclick="filterByType('chinese')">🥡 Chinese</button>
-    <button onclick="filterByType('thai')">🍜 Thai</button>
-    <button onclick="filterByType('japanese')">🍣 Japanese</button>
-    <button onclick="filterByType('korean')">🍲 Korean</button>
-    <button onclick="filterByType('american')">🍔 American</button>
-    <button onclick="filterByType('bakery')">🥐 Bakery</button>
-    <button onclick="filterByType('drinks')">☕ Drinks</button>
+ 
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById("searchForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const query = document.getElementById("searchQuery").value.trim();
+      const cuisine = document.getElementById("cuisine").value;
+      const dietary = document.getElementById("dietaryPreference").value;
+  
+      // Simulate search functionality
+      alert("Searching for: " + query + cuisine + (dietary ? " with preference: " + dietary : ""));
+  
+      searchRestaurants(query); // Call the function
+    });
+  
+    function searchRestaurants(query) {
+      fetch(`/api/search?query=${query}`)  // Corrected variable usage
+        .then(response => response.json())
+        .then(data => {
+          const resultsContainer = document.getElementById('searchResults');
+          resultsContainer.innerHTML = '';
+  
+          if (data.length === 0) {
+            resultsContainer.innerHTML = '<p class="text-center">No results found</p>';
+            return;
+          }
+  
+          data.forEach(restaurant => {
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('col-md-4', 'mb-4');
+            resultItem.innerHTML = `
+              <div class="card">
+                <img src="${restaurant.image}" alt="${restaurant.name}" class="restaurant-img card-img-top" />
+                <div class="card-body">
+                  <h5 class="card-title">${restaurant.name}</h5>
+                  <p class="card-text">${restaurant.cuisine}</p>
+                  <p class="card-text">${restaurant.address}</p>
+                  <a href="details.html?id=${restaurant.id}" class="btn btn-custom">View Details</a>
+                </div>
+              </div>
+            `;
+            resultsContainer.appendChild(resultItem);
+          });
+        })
+        .catch(err => {
+          console.error('Error fetching search results:', err);
+        });
+    }
+  </script>
+  
+   <!-- Results (Recommended Picks) -->
+   <div class="mt-5">
+    <h5 class="mb-3 text-success"><i class="bi bi-star-fill"></i> Recommended Picks</h5>
+    <div class="row g-3">
+
+      <div class="col-md-4">
+        <a href="details.html?restaurant=1" class="card-link">
+          <div class="card restaurant-card p-3">
+            <h6 class="text-success mb-1">Mean Green Grill</h6>
+            <p>📍 Fry Street</p>
+            <p>🍽️ American, Halal Options</p>
+            <p class="text-muted small">💸 10% off with student ID</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a href="details.html?restaurant=2" class="card-link">
+          <div class="card restaurant-card p-3">
+            <h6 class="text-success mb-1">Tandoori Corner</h6>
+            <p>📍 Hickory Street</p>
+            <p>🍽️ Indian, Halal</p>
+            <p class="text-muted small">🎉 Free chai with combo</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a href="details.html?restaurant=3" class="card-link">
+          <div class="card restaurant-card p-3">
+            <h6 class="text-success mb-1">Vegan Vibes</h6>
+            <p>📍 Denton Square</p>
+            <p>🍽️ Vegan, Gluten-Free</p>
+            <p class="text-muted small">🌱 UNT approved menu</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a href="details.html?restaurant=4" class="card-link">
+          <div class="card restaurant-card p-3">
+            <h6 class="text-success mb-1">La Calle Tacos</h6>
+            <p>📍 University Dr</p>
+            <p>🌮 Mexican Street Food</p>
+            <p class="text-muted small">🔥 UNT late night favorite</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a href="details.html?restaurant=5" class="card-link">
+          <div class="card restaurant-card p-3">
+            <h6 class="text-success mb-1">Spice Bowl</h6>
+            <p>📍 Bell Ave</p>
+            <p>🍛 Thai, Gluten-Free</p>
+            <p class="text-muted small">🧡 Thai tea free on Tuesdays</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a href="details.html?restaurant=6" class="card-link">
+          <div class="card restaurant-card p-3">
+            <h6 class="text-success mb-1">Pasta Republic</h6>
+            <p>📍 Eagle Dr</p>
+            <p>🍝 Italian, Vegetarian Friendly</p>
+            <p class="text-muted small">🎓 15% off for UNT students</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
   </div>
 
-  <!-- Content Container for Side-by-Side Layout -->
-  <div class="content-container">
-
-    <!-- Filter Sidebar (Dietary Preferences) -->
-    <aside class="filter-sidebar">
-      <h3>Dietary Preferences</h3>
-      <label><input type="checkbox" onclick="filterByPreference('vegan')"> Vegan</label>
-      <label><input type="checkbox" onclick="filterByPreference('vegetarian')"> Vegetarian</label>
-      <label><input type="checkbox" onclick="filterByPreference('halal')"> Halal</label>
-      <label><input type="checkbox" onclick="filterByPreference('gluten-free')"> Gluten-Free</label>
-      <label><input type="checkbox" onclick="filterByPreference('kosher')"> Kosher</label>
-    </aside>
-
-    <!-- Restaurants List -->
-    <div class="restaurant-list" id="restaurantList">
-      <!-- Restaurants will be dynamically added here -->
-    </div>
-
+  
+  <!-- Map -->
+  <div class="map-container mt-5">
+    <h5 class="text-success mb-2"><i class="bi bi-geo-alt-fill"></i> Find These on the Map</h5>
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3348.489055702351!2d-97.1492130848027!3d33.21024158083673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c2a7d68a4e327%3A0x7df19b3a6e271489!2sUniversity%20of%20North%20Texas!5e0!3m2!1sen!2sus!4v1617825701072!5m2!1sen!2sus" 
+      allowfullscreen="" loading="lazy">
+    </iframe>
+  </div>
+</div>
+ <div id="footer"></div> 
+ 
+ <footer>
+    © 2025 UNT Food Finder | Created with ❤️ for UNT Students
+  </footer>
 </body>
-
 </html>

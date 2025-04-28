@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Favorites - UNT Food Finder</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .favorites-hero {
+      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1350&q=80') center center/cover no-repeat;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .favorites-hero h1 {
+      font-size: 2.5rem;
+    }
+    .favorite-card {
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header"></div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">UNT Food Finder</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html"><button class="btn btn-light">Home</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html"><button class="btn btn-light">About</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="search.html"><button class="btn btn-light">Search</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="submit.html"><button class="btn btn-light">Submit</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="favorites.html"><button class="btn btn-light">Favorites</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html"><button class="btn btn-light">Login</button></a></li>
+        <li class="nav-item"><a class="nav-link" href="signup.html"><button class="btn btn-light">Sign Up</button></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <section class="favorites-hero">
+    <h1>Your Favorite Restaurants</h1>
+  </section>
+
+ <!-- Favorites Content -->
+ <div class="container mt-5">
+  <h2>Your Favorite Restaurants</h2>
+  <div id="favorites-list" class="row">
+    <!-- Favorites will be dynamically loaded here -->
+  </div>
+</div>
+
+<script>
+  // Assuming you are storing favorite restaurants in a session or via an API
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+  function loadFavorites() {
+    const favoritesList = document.getElementById('favorites-list');
+    if (favorites.length === 0) {
+      favoritesList.innerHTML = '<p>No favorites added yet!</p>';
+      return;
+    }
+
+    favorites.forEach(restaurant => {
+      const div = document.createElement('div');
+      div.classList.add('col-md-4', 'mb-4');
+      div.innerHTML = `
+        <div class="card">
+          <img src="${restaurant.image}" alt="${restaurant.name}" class="restaurant-img card-img-top" />
+          <div class="card-body">
+            <h5 class="card-title">${restaurant.name}</h5>
+            <p class="card-text">${restaurant.cuisine}</p>
+            <p class="card-text">${restaurant.address}</p>
+            <a href="details.html?id=${restaurant.id}" class="btn btn-custom">View Details</a>
+          </div>
+        </div>
+      `;
+      favoritesList.appendChild(div);
+    });
+  }
+
+  loadFavorites();
+</script>
+<footer class="text-center bg-success text-white py-3">
+  © 2025 UNT Food Finder | Built with 💚 for UNT students
+</footer>
+
+</body>
+
+  <div id="footer"></div>
+
+</html>
